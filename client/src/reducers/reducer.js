@@ -9,7 +9,10 @@ import {
     DELETE_FAIL,
     EDIT_START,
     EDIT_SUCCESS,
-    EDIT_FAIL
+    EDIT_FAIL,
+    ADD_START,
+    ADD_SUCCESS,
+    ADD_FAIL
 } from '../actions'
 
 
@@ -90,6 +93,25 @@ export const reducer = (state = initialState, action) => {
                 ...state,
                 isFetching: false,
                 error: ''
+            }
+        case ADD_START:
+            return {
+                ...state,
+                isFetching: true,
+                error: ''
+            }
+        case ADD_SUCCESS:
+            return {
+                ...state,
+                isFetching: false,
+                error: '',
+                colors: action.payload
+            }
+        case ADD_FAIL:
+            return {
+                ...state,
+                isFetching: false,
+                error: action.payload
             }
         default:
             return state

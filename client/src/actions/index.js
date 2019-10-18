@@ -15,6 +15,10 @@ export const EDIT_START = 'EDIT_START';
 export const EDIT_SUCCESS = 'EDIT_SUCCESS';
 export const EDIT_FAIL = 'EDIT_FAIL'
 
+export const ADD_START = 'ADD_START';
+export const ADD_SUCCESS = 'ADD_SUCCESS';
+export const ADD_FAIL = 'ADD_FAIL'
+
 export const login = loginInfo => dispatch => {
     dispatch({ type: LOGIN_START });
     axiosWithAuth()
@@ -53,4 +57,15 @@ export const editTheColor = (id, color) => dispatch => {
             // dispatch({ type: EDIT_SUCCESS, payload: res.data })
         })
         .catch(err => dispatch({ type: EDIT_FAIL, payload: err.response }))
+}
+
+export const addColor = color => dispatch => {
+    dispatch({ type: ADD_START })
+    axiosWithAuth()
+        .post('/api/colors', color)
+        .then(res =>
+            dispatch({ type: ADD_SUCCESS, payload: res.data })
+        )
+        .catch(err => dispatch({ type: ADD_FAIL, payload: err.response }))
+
 }

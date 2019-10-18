@@ -2,8 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useDispatch } from 'react-redux'
 
-import { removeColor } from '../actions'
-import { editTheColor } from '../actions'
+import { removeColor, editTheColor, addColor } from '../actions'
 
 const initialColor = {
   color: "",
@@ -15,6 +14,7 @@ const ColorList = ({ colors, updateColors }) => {
   console.log('colors in colorlist', colors);
   const [editing, setEditing] = useState(false);
   const [colorToEdit, setColorToEdit] = useState(initialColor);
+  const [colorToAdd, setColorToAdd] = useState(initialColor);
 
 
 
@@ -87,6 +87,23 @@ const ColorList = ({ colors, updateColors }) => {
       )}
       <div className="spacer" />
       {/* stretch - build another form here to add a color */}
+      <form onSubmit={() => dispatch(addColor(colorToAdd))}>
+        <input
+          type='text'
+          name='color'
+          placeholder='color name'
+          value={colorToAdd.color}
+          onChange={e => { setColorToAdd({ ...colorToAdd, color: e.target.value }) }}
+        />
+        <input
+          type='text'
+          name='hex'
+          placeholder='color hex'
+          value={colorToAdd.code.hex}
+          onChange={e => { setColorToAdd({ ...colorToAdd, code: { hex: e.target.value } }) }}
+        />
+        <button type='submit'>Add</button>
+      </form>
     </div>
   );
 };
