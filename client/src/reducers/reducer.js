@@ -6,7 +6,10 @@ import {
     GET_COLORS_SUCCESS,
     GET_COLORS_FAIL,
     DELETE_START,
-    DELETE_FAIL
+    DELETE_FAIL,
+    EDIT_START,
+    EDIT_SUCCESS,
+    EDIT_FAIL
 } from '../actions'
 
 
@@ -68,6 +71,25 @@ export const reducer = (state = initialState, action) => {
                 ...state,
                 isFetching: false,
                 error: action.payload
+            }
+        case EDIT_START:
+            return {
+                ...state,
+                isFetching: true,
+                error: ''
+            }
+        case EDIT_SUCCESS:
+            return {
+                ...state,
+                isFetching: false,
+                error: '',
+                colors: action.payload
+            }
+        case EDIT_FAIL:
+            return {
+                ...state,
+                isFetching: false,
+                error: ''
             }
         default:
             return state

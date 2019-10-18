@@ -11,6 +11,10 @@ export const GET_COLORS_FAIL = 'GET_COLORS_FAIL'
 export const DELETE_START = 'DELETE_START';
 export const DELETE_FAIL = 'DELETE_FAIL';
 
+export const EDIT_START = 'EDIT_START';
+export const EDIT_SUCCESS = 'EDIT_SUCCESS';
+export const EDIT_FAIL = 'EDIT_FAIL'
+
 export const login = loginInfo => dispatch => {
     dispatch({ type: LOGIN_START });
     axiosWithAuth()
@@ -28,7 +32,6 @@ export const getColors = () => dispatch => {
     axiosWithAuth()
         .get('/api/colors')
         .then(res => {
-            console.log('get res', res.data)
             dispatch({ type: GET_COLORS_SUCCESS, payload: res.data })
         })
         .catch(err => dispatch({ type: GET_COLORS_FAIL, payload: err.response }))
@@ -39,4 +42,15 @@ export const removeColor = id => dispatch => {
     axiosWithAuth()
         .delete(`/api/colors/${id}`)
         .catch(err => dispatch({ type: DELETE_FAIL, payload: err.response }))
+}
+
+export const editTheColor = (id, color) => dispatch => {
+    dispatch({ type: EDIT_START })
+    axiosWithAuth()
+        .put(`/api/colors/${id}`, color)
+        .then(res => {
+            console.log('edited color', res)
+            // dispatch({ type: EDIT_SUCCESS, payload: res.data })
+        })
+        .catch(err => dispatch({ type: EDIT_FAIL, payload: err.response }))
 }

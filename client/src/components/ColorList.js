@@ -3,6 +3,7 @@ import axios from "axios";
 import { useDispatch } from 'react-redux'
 
 import { removeColor } from '../actions'
+import { editTheColor } from '../actions'
 
 const initialColor = {
   color: "",
@@ -15,6 +16,8 @@ const ColorList = ({ colors, updateColors }) => {
   const [editing, setEditing] = useState(false);
   const [colorToEdit, setColorToEdit] = useState(initialColor);
 
+
+
   const editColor = color => {
     setEditing(true);
     setColorToEdit(color);
@@ -25,7 +28,9 @@ const ColorList = ({ colors, updateColors }) => {
     // Make a put request to save your updated color
     // think about where will you get the id from...
     // where is is saved right now?
+    dispatch(editTheColor(colorToEdit.id, colorToEdit))
   };
+
 
   const deleteColor = color => {
     dispatch(removeColor(color.id))
