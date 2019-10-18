@@ -1,5 +1,8 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { useDispatch } from 'react-redux'
+
+import { removeColor, editTheColor, addColor } from '../actions'
 
 const initialColor = {
   color: "",
@@ -7,9 +10,13 @@ const initialColor = {
 };
 
 const ColorList = ({ colors, updateColors }) => {
-  console.log(colors);
+  const dispatch = useDispatch();
+  console.log('colors in colorlist', colors);
   const [editing, setEditing] = useState(false);
   const [colorToEdit, setColorToEdit] = useState(initialColor);
+  const [colorToAdd, setColorToAdd] = useState(initialColor);
+
+
 
   const editColor = color => {
     setEditing(true);
@@ -21,10 +28,12 @@ const ColorList = ({ colors, updateColors }) => {
     // Make a put request to save your updated color
     // think about where will you get the id from...
     // where is is saved right now?
+    dispatch(editTheColor(colorToEdit.id, colorToEdit))
   };
 
+
   const deleteColor = color => {
-    // make a delete request to delete this color
+    dispatch(removeColor(color.id))
   };
 
   return (
@@ -78,6 +87,23 @@ const ColorList = ({ colors, updateColors }) => {
       )}
       <div className="spacer" />
       {/* stretch - build another form here to add a color */}
+      <form onSubmit={() => dispatch(addColor(colorToAdd))}>
+        <input
+          type='text'
+          name='color'
+          placeholder='color name'
+          value={colorToAdd.color}
+          onChange={e => { setColorToAdd({ ...colorToAdd, color: e.target.value }) }}
+        />
+        <input
+          type='text'
+          name='hex'
+          placeholder='color hex'
+          value={colorToAdd.code.hex}
+          onChange={e => { setColorToAdd({ ...colorToAdd, code: { hex: e.target.value } }) }}
+        />
+        <button type='submit'>Add</button>
+      </form>
     </div>
   );
 };
