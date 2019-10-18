@@ -19,7 +19,7 @@ const BubblePage = () => {
     dispatch(getColors())
   }, [])
 
-  console.log(fetchColors)
+  console.log('colorlist in BubblePage', colorList)
 
   if (loading) {
     return <h1>Fetching colors...</h1>

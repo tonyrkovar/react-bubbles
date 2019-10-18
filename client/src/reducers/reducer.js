@@ -4,7 +4,9 @@ import {
     LOGIN_FAIL,
     GET_COLORS_START,
     GET_COLORS_SUCCESS,
-    GET_COLORS_FAIL
+    GET_COLORS_FAIL,
+    DELETE_START,
+    DELETE_FAIL
 } from '../actions'
 
 
@@ -50,6 +52,18 @@ export const reducer = (state = initialState, action) => {
                 colors: action.payload,
             }
         case GET_COLORS_FAIL:
+            return {
+                ...state,
+                isFetching: false,
+                error: action.payload
+            }
+        case DELETE_START:
+            return {
+                ...state,
+                isFetching: true,
+                error: ''
+            }
+        case DELETE_FAIL:
             return {
                 ...state,
                 isFetching: false,
